@@ -23,9 +23,9 @@
         .text-section { margin-top: 30px; text-align: center; background: #333; padding: 20px; border-radius: 15px; width: 90%; max-width: 600px; }
         
         .refresh-btn { 
-            font-size: 40px; cursor: pointer; border: none; background: none; filter: grayscale(1) invert(1); transition: transform 0.4s; 
+            font-size: 40px; cursor: pointer; border: none; background: none; filter: invert(1); transition: transform 0.4s; 
         }
-        .refresh-btn:hover { transform: scale(1.2) rotate(90deg); }
+        .refresh-btn:active { transform: rotate(180deg); }
 
         @media (max-width: 768px) {
             .container { grid-template-columns: 1fr; }
@@ -37,30 +37,29 @@
 <body>
 
     <div class="container">
-        <img id="leftPhoto" class="side-photo" src="left.png" alt="Лево">
-        <img id="mainPhoto" class="main-photo" src="main.png" alt="Центр">
-        <img id="rightPhoto" class="side-photo" src="RobloxScreenShot20250802_222639911.png" alt="Право">
+        <img id="leftPhoto" class="side-photo" src="left.png">
+        <img id="mainPhoto" class="main-photo" src="main.png">
+        <img id="rightPhoto" class="side-photo" src="RobloxScreenShot20250802_222639911.png">
     </div>
 
     <div class="text-section">
-        <p id="dynamicText" style="font-size: 1.2rem;">Мои приключения в Roblox</p>
+        <p id="dynamicText" style="font-size: 1.2rem;">Нажми на кнопку, чтобы сменить кадр!</p>
         <button class="refresh-btn" onclick="updateContent()">🔄</button>
     </div>
 
     <script>
-        // Массив с твоим контентом
         const myContent = [
             {
-                text: "Смотри, это мои основные скрины!",
+                text: "Мой первый набор скринов из Roblox!",
                 l: "left.png",
                 m: "main.png",
                 r: "RobloxScreenShot20250802_222639911.png"
             },
             {
-                text: "А это второй скриншот из Roblox",
+                text: "А вот и другие моменты игры",
                 l: "RobloxScreenShot20250802_223423728.png",
-                m: "left.png",
-                r: "main.png"
+                m: "RobloxScreenShot20250802_222639911.png",
+                r: "left.png"
             }
         ];
 
