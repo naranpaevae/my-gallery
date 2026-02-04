@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Галерея Naran</title>
+    <style>
+        /* Базовые настройки на весь экран */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            background-color: #000; /* Черный фон для стиля */
+            color: white;
+            font-family: 'Segoe UI', sans-serif;
+            overflow: hidden;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Контейнер для трех фото */
+        .gallery-container {
+            display: grid;
+            grid-template-columns: 20% 60% 20%; /* Узкие бока, широкий центр */
+            height: 80vh; /* Занимает 80% высоты экрана */
+            width: 100%;
+            gap: 5px;
+        }
+
+        /* Общие стили для всех фото */
+        .photo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Растягивает вертикально во всю страницу без искажений */
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        /* Центральное фото выделяем рамкой */
+        .main-img {
+            border-left: 2px solid #333;
+            border-right: 2px solid #333;
+        }
+
+        /* Нижняя часть с текстом и кнопкой */
+        .footer {
+            height: 20vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: #111;
+            text-align: center;
+            padding: 10px;
+        }
+
+        #dynamicText {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            font-weight: 300;
+        }
+
+        .refresh-btn {
+            font-size: 40px;
+            cursor: pointer;
+            border: none;
+            background: none;
+            filter: invert(1);
+            transition: transform 0.3s;
+        }
+        .refresh-btn:active { transform: scale(0.9) rotate(180deg); }
+
+        /* Адаптация для телефона */
+        @media (max-width: 768px) {
+            .gallery-container {
+                grid-template-columns: 1fr; /* На телефоне в одну колонку */
+                height: auto;
+                overflow-y: auto;
+            }
+            .side-photo { height: 200px; }
+            .main-photo { height: 400px; order: -1; } /* Naran всегда сверху */
+            .footer { height: 150px; position: sticky; bottom: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="gallery-container">
+        <img id="leftImg" class="photo side-photo" src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=500">
+        
+        <img id="centerImg" class="photo main-photo main-img" src="naran.png">
+        
+        <img id="rightImg" class="photo side-photo" src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=500">
+    </div>
+
+    <div class="footer">
+        <div id="dynamicText">Добро пожаловать в мой мир</div>
+        <button class="refresh-btn" onclick="changeContent()">🔄</button>
+    </div>
+
+    <script>
+        // Списки тем для боковых фото и текстов
+        const contents = [
+            { text: "Милые котики и спокойный лес", l: "cat", r: "forest" },
+            { text: "Яркие цветы и чистое небо", l: "flowers", r: "sky" },
+            { text: "Верные собаки и высокие горы", l: "dog", r: "mountains" },
+            { text: "Красивые бабочки и природа", l: "butterfly", r: "nature" }
+        ];
+
+        let currentIndex = 0;
+
+        function changeContent() {
+            currentIndex = (currentIndex + 1) % contents.length;
+            const item = contents[currentIndex];
+
+            // Меняем текст
+            document.getElementById('dynamicText').innerText = item.text;
+
+            // Меняем боковые картинки (используем случайные из Unsplash по теме)
+            const randomID = Math.floor(Math.random() * 1000);
+            document.getElementById('leftImg').src = `https://source.unsplash.com/featured/400x900?${item.l}&sig=${randomID}`;
+            document.getElementById('rightImg').src = `https://source.unsplash.com/featured/400x900?${item.r}&sig=${randomID + 1}`;
+            
+            // naran.png остается на месте
+        }
+    </script>
+</body>
+</html>
