@@ -7,7 +7,6 @@
     <style>
         body { font-family: sans-serif; display: flex; flex-direction: column; align-items: center; background: #f0f0f0; margin: 0; padding: 20px; }
         
-        /* Сетка: 3 колонки на ПК, 1 колонка на телефоне */
         .container { 
             display: grid; 
             grid-template-columns: 1fr 2fr 1fr; 
@@ -17,53 +16,68 @@
             align-items: center;
         }
 
-        .side-photo, .main-photo { width: 100%; border-radius: 10px; cursor: pointer; object-fit: cover; }
+        .side-photo, .main-photo { width: 100%; border-radius: 10px; cursor: pointer; object-fit: cover; background: #ddd; }
         .side-photo { height: 300px; }
         .main-photo { height: 450px; }
 
-        .text-section { margin-top: 20px; text-align: center; background: white; padding: 20px; border-radius: 10px; width: 100%; max-width: 600px; }
+        .text-section { margin-top: 20px; text-align: center; background: white; padding: 20px; border-radius: 10px; width: 100%; max-width: 600px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
         
         .refresh-btn { 
-            font-size: 24px; cursor: pointer; border: none; background: none; transition: transform 0.3s; 
+            font-size: 32px; cursor: pointer; border: none; background: none; transition: transform 0.3s; 
         }
+        .refresh-btn:hover { transform: scale(1.2); }
         .refresh-btn:active { transform: rotate(180deg); }
 
-        /* Адаптация для мобилок */
         @media (max-width: 768px) {
             .container { grid-template-columns: 1fr; }
-            .side-photo { height: 200px; }
+            .side-photo { height: 250px; }
+            .main-photo { height: 350px; }
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <img id="leftPhoto" class="side-photo" src="https://placekitten.com/200/300" alt="Кошка">
-        <img class="main-photo" src="https://picsum.photos/400/600" alt="Главное фото">
-        <img id="rightPhoto" class="side-photo" src="https://placehold.co/200x300?text=Flower" alt="Цветок">
+        <img id="leftPhoto" class="side-photo" src="images/left.png" alt="Лево">
+        <img id="mainPhoto" class="main-photo" src="images/main.png" alt="Центр">
+        <img id="rightPhoto" class="side-photo" src="images/right.png" alt="Право">
     </div>
 
     <div class="text-section">
-        <p id="dynamicText">Нажми на кнопку, чтобы обновить текст!</p>
+        <p id="dynamicText">Моя подборка фото и текстов</p>
         <button class="refresh-btn" onclick="updateContent()">🔄</button>
     </div>
 
     <script>
-        const texts = [
-            "Сегодня отличный день для кода!",
-            "Котики правят миром.",
-            "Цветы украшают нашу жизнь.",
-            "Этот сайт работает на моем ПК!"
+        // ТУТ ТВОЙ КОНТЕНТ: просто добавляй блоки { text, left, main, right }
+        const myLibrary = [
+            {
+                text: "Первый набор: котики и цветы",
+                left: "images/left.png",
+                main: "images/main.png",
+                right: "images/right.png"
+            },
+            {
+                text: "Второй набор: что-то новенькое",
+                left: "images/left2.png", 
+                main: "images/main2.png",
+                right: "images/right2.png"
+            }
         ];
 
+        let currentIndex = 0;
+
         function updateContent() {
-            // Меняем текст случайно
-            const randomText = texts[Math.floor(Math.random() * texts.length)];
-            document.getElementById('dynamicText').innerText = randomText;
+            currentIndex = (currentIndex + 1) % myLibrary.length;
+            const data = myLibrary[currentIndex];
+
+            // Обновляем текст
+            document.getElementById('dynamicText').innerText = data.text;
             
-            // Меняем боковые картинки (заглушки для примера)
-            document.getElementById('leftPhoto').src = "https://placekitten.com/200/301?t=" + Math.random();
-            document.getElementById('rightPhoto').src = "https://picsum.photos/200/300?random=" + Math.random();
+            // Обновляем картинки (пути к папке images)
+            document.getElementById('leftPhoto').src = data.left;
+            document.getElementById('mainPhoto').src = data.main;
+            document.getElementById('rightPhoto').src = data.right;
         }
     </script>
 </body>
