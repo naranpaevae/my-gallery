@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Моя Галерея</title>
+    <style>
+        body { font-family: sans-serif; display: flex; flex-direction: column; align-items: center; background: #f0f0f0; margin: 0; padding: 20px; }
+        
+        /* Сетка: 3 колонки на ПК, 1 колонка на телефоне */
+        .container { 
+            display: grid; 
+            grid-template-columns: 1fr 2fr 1fr; 
+            gap: 20px; 
+            width: 100%; 
+            max-width: 1000px; 
+            align-items: center;
+        }
+
+        .side-photo, .main-photo { width: 100%; border-radius: 10px; cursor: pointer; object-fit: cover; }
+        .side-photo { height: 300px; }
+        .main-photo { height: 450px; }
+
+        .text-section { margin-top: 20px; text-align: center; background: white; padding: 20px; border-radius: 10px; width: 100%; max-width: 600px; }
+        
+        .refresh-btn { 
+            font-size: 24px; cursor: pointer; border: none; background: none; transition: transform 0.3s; 
+        }
+        .refresh-btn:active { transform: rotate(180deg); }
+
+        /* Адаптация для мобилок */
+        @media (max-width: 768px) {
+            .container { grid-template-columns: 1fr; }
+            .side-photo { height: 200px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <img id="leftPhoto" class="side-photo" src="https://placekitten.com/200/300" alt="Кошка">
+        <img class="main-photo" src="https://picsum.photos/400/600" alt="Главное фото">
+        <img id="rightPhoto" class="side-photo" src="https://placehold.co/200x300?text=Flower" alt="Цветок">
+    </div>
+
+    <div class="text-section">
+        <p id="dynamicText">Нажми на кнопку, чтобы обновить текст!</p>
+        <button class="refresh-btn" onclick="updateContent()">🔄</button>
+    </div>
+
+    <script>
+        const texts = [
+            "Сегодня отличный день для кода!",
+            "Котики правят миром.",
+            "Цветы украшают нашу жизнь.",
+            "Этот сайт работает на моем ПК!"
+        ];
+
+        function updateContent() {
+            // Меняем текст случайно
+            const randomText = texts[Math.floor(Math.random() * texts.length)];
+            document.getElementById('dynamicText').innerText = randomText;
+            
+            // Меняем боковые картинки (заглушки для примера)
+            document.getElementById('leftPhoto').src = "https://placekitten.com/200/301?t=" + Math.random();
+            document.getElementById('rightPhoto').src = "https://picsum.photos/200/300?random=" + Math.random();
+        }
+    </script>
+</body>
+</html>
