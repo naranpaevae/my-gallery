@@ -92,4 +92,39 @@
         
         <img id="centerImg" class="photo main-photo main-img" src="naran.png">
         
-        <img id="rightImg" class="photo side-photo" src="
+        <img id="rightImg" class="photo side-photo" src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=500">
+    </div>
+
+    <div class="footer">
+        <div id="dynamicText">Добро пожаловать в мой мир</div>
+        <button class="refresh-btn" onclick="changeContent()">🔄</button>
+    </div>
+
+    <script>
+        // Списки тем для боковых фото и текстов
+        const contents = [
+            { text: "Милые котики и спокойный лес", l: "cat", r: "forest" },
+            { text: "Яркие цветы и чистое небо", l: "flowers", r: "sky" },
+            { text: "Верные собаки и высокие горы", l: "dog", r: "mountains" },
+            { text: "Красивые бабочки и природа", l: "butterfly", r: "nature" }
+        ];
+
+        let currentIndex = 0;
+
+        function changeContent() {
+            currentIndex = (currentIndex + 1) % contents.length;
+            const item = contents[currentIndex];
+
+            // Меняем текст
+            document.getElementById('dynamicText').innerText = item.text;
+
+            // Меняем боковые картинки (используем случайные из Unsplash по теме)
+            const randomID = Math.floor(Math.random() * 1000);
+            document.getElementById('leftImg').src = `https://source.unsplash.com/featured/400x900?${item.l}&sig=${randomID}`;
+            document.getElementById('rightImg').src = `https://source.unsplash.com/featured/400x900?${item.r}&sig=${randomID + 1}`;
+            
+            // naran.png остается на месте
+        }
+    </script>
+</body>
+</html>
