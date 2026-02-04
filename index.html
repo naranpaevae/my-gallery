@@ -3,52 +3,93 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Naran World</title>
+    <title>Галерея Naran</title>
     <style>
-        html, body { height: 100%; margin: 0; padding: 0; background: #000; color: white; overflow: hidden; font-family: sans-serif; }
-        body { display: flex; flex-direction: column; }
-        .container { display: grid; grid-template-columns: 20% 60% 20%; height: 85vh; width: 100vw; gap: 5px; }
-        .photo { width: 100%; height: 100%; object-fit: cover; background: #111; }
-        .footer { height: 15vh; display: flex; flex-direction: column; justify-content: center; align-items: center; background: #111; border-top: 1px solid #333; }
-        .btn { font-size: 45px; cursor: pointer; background: none; border: none; filter: invert(1); }
+        /* Базовые настройки на весь экран */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            background-color: #000; /* Черный фон для стиля */
+            color: white;
+            font-family: 'Segoe UI', sans-serif;
+            overflow: hidden;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Контейнер для трех фото */
+        .gallery-container {
+            display: grid;
+            grid-template-columns: 20% 60% 20%; /* Узкие бока, широкий центр */
+            height: 80vh; /* Занимает 80% высоты экрана */
+            width: 100%;
+            gap: 5px;
+        }
+
+        /* Общие стили для всех фото */
+        .photo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Растягивает вертикально во всю страницу без искажений */
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        /* Центральное фото выделяем рамкой */
+        .main-img {
+            border-left: 2px solid #333;
+            border-right: 2px solid #333;
+        }
+
+        /* Нижняя часть с текстом и кнопкой */
+        .footer {
+            height: 20vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: #111;
+            text-align: center;
+            padding: 10px;
+        }
+
+        #dynamicText {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            font-weight: 300;
+        }
+
+        .refresh-btn {
+            font-size: 40px;
+            cursor: pointer;
+            border: none;
+            background: none;
+            filter: invert(1);
+            transition: transform 0.3s;
+        }
+        .refresh-btn:active { transform: scale(0.9) rotate(180deg); }
+
+        /* Адаптация для телефона */
         @media (max-width: 768px) {
-            .container { grid-template-columns: 1fr; overflow-y: auto; height: auto; }
-            .side-photo { height: 250px; }
-            .main-photo { height: 450px; order: -1; }
-            .footer { height: 100px; position: sticky; bottom: 0; }
+            .gallery-container {
+                grid-template-columns: 1fr; /* На телефоне в одну колонку */
+                height: auto;
+                overflow-y: auto;
+            }
+            .side-photo { height: 200px; }
+            .main-photo { height: 400px; order: -1; } /* Naran всегда сверху */
+            .footer { height: 150px; position: sticky; bottom: 0; }
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <img id="leftImg" class="photo side-photo" src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=600">
+    <div class="gallery-container">
+        <img id="leftImg" class="photo side-photo" src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=500">
         
-        <img id="centerImg" class="photo main-photo" src="naran.png">
+        <img id="centerImg" class="photo main-photo main-img" src="naran.png">
         
-        <img id="rightImg" class="photo side-photo" src="https://images.unsplash.com/photo-1537151608828-ea2b11777ee8?w=600">
-    </div>
-
-    <div class="footer">
-        <div id="statusText">Галерея Naran</div>
-        <button class="btn" onclick="nextVibe()">🔄</button>
-    </div>
-
-    <script>
-        const vibes = [
-            { t: "Собачки и Лес", l: "photo-1537151608828-ea2b11777ee8", r: "photo-1441974231531-c6227db76b6e" },
-            { t: "Котики и Цветы", l: "photo-1514888286974-6c03e2ca1dba", r: "photo-1490750967868-88aa4486c946" },
-            { t: "Природа и Горы", l: "photo-1464822759023-fed622ff2c3b", r: "photo-1472214103451-9374bd1c798e" }
-        ];
-
-        let idx = 0;
-        function nextVibe() {
-            idx = (idx + 1) % vibes.length;
-            const item = vibes[idx];
-            document.getElementById('statusText').innerText = item.t;
-            document.getElementById('leftImg').src = `https://images.unsplash.com/${item.l}?w=600&fit=crop`;
-            document.getElementById('rightImg').src = `https://images.unsplash.com/${item.r}?w=600&fit=crop`;
-        }
-    </script>
-</body>
-</html>
+        <img id="rightImg" class="photo side-photo" src="
