@@ -3,76 +3,116 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Моя Галерея Roblox</title>
+    <title>Галерея Naran</title>
     <style>
-        body { font-family: sans-serif; display: flex; flex-direction: column; align-items: center; background: #1a1a1a; color: white; margin: 0; padding: 20px; }
+        /* Растягиваем на весь экран */
+        html, body { height: 100%; margin: 0; padding: 0; overflow-x: hidden; }
         
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex; 
+            flex-direction: column; 
+            background: #000; /* Темный фон для стиля */
+            color: white;
+        }
+        
+        /* Сетка на весь экран */
         .container { 
             display: grid; 
             grid-template-columns: 1fr 2fr 1fr; 
-            gap: 15px; 
-            width: 100%; 
-            max-width: 1200px; 
-            align-items: center;
+            gap: 10px; 
+            height: 80vh; /* Основная часть занимает 80% высоты */
+            width: 100%;
+            align-items: stretch;
         }
 
-        .side-photo, .main-photo { width: 100%; border-radius: 15px; border: 2px solid #333; object-fit: cover; background: #222; }
-        .side-photo { height: 250px; }
-        .main-photo { height: 450px; box-shadow: 0 0 20px rgba(0,255,255,0.2); }
+        /* Фотографии */
+        .photo { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; /* Заполняет всё пространство без искажений */
+            transition: opacity 0.5s ease;
+        }
 
-        .text-section { margin-top: 30px; text-align: center; background: #333; padding: 20px; border-radius: 15px; width: 90%; max-width: 600px; }
+        .main-photo {
+            border-left: 2px solid #333;
+            border-right: 2px solid #333;
+        }
+
+        /* Текстовая секция снизу */
+        .text-section { 
+            height: 20vh; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
+            background: rgba(20, 20, 20, 0.9);
+            text-align: center;
+            padding: 10px;
+        }
         
         .refresh-btn { 
-            font-size: 40px; cursor: pointer; border: none; background: none; filter: invert(1); transition: transform 0.4s; 
+            font-size: 40px; 
+            cursor: pointer; 
+            border: none; 
+            background: none; 
+            filter: invert(1); 
+            transition: transform 0.3s;
+            margin-top: 10px;
         }
+        .refresh-btn:hover { transform: scale(1.2); }
         .refresh-btn:active { transform: rotate(180deg); }
 
+        /* Адаптация для телефона */
         @media (max-width: 768px) {
-            .container { grid-template-columns: 1fr; }
-            .side-photo { height: 200px; }
-            .main-photo { height: 300px; }
+            .container { 
+                grid-template-columns: 1fr; /* На телефоне в одну колонку */
+                height: auto;
+            }
+            .side-photo { height: 300px; } /* Боковые фото на телефоне поменьше */
+            .main-photo { height: 500px; order: -1; } /* Центральное фото сверху */
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <img id="leftPhoto" class="side-photo" src="left.png">
-        <img id="mainPhoto" class="main-photo" src="main.png">
-        <img id="rightPhoto" class="side-photo" src="RobloxScreenShot20250802_222639911.png">
+        <img id="leftPhoto" class="photo side-photo" src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?q=80&w=500&auto=format&fit=crop" alt="Котик">
+        
+        <img id="mainPhoto" class="photo main-photo" src="naran.png" alt="Naran">
+        
+        <img id="rightPhoto" class="photo side-photo" src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?q=80&w=500&auto=format&fit=crop" alt="Природа">
     </div>
 
     <div class="text-section">
-        <p id="dynamicText" style="font-size: 1.2rem;">Нажми на кнопку, чтобы сменить кадр!</p>
+        <p id="dynamicText" style="font-size: 1.3rem; margin: 0;">Привет! Нажми на кнопку ниже</p>
         <button class="refresh-btn" onclick="updateContent()">🔄</button>
     </div>
 
     <script>
-        const myContent = [
-            {
-                text: "Мой первый набор скринов из Roblox!",
-                l: "left.png",
-                m: "main.png",
-                r: "RobloxScreenShot20250802_222639911.png"
-            },
-            {
-                text: "А вот и другие моменты игры",
-                l: "RobloxScreenShot20250802_223423728.png",
-                m: "RobloxScreenShot20250802_222639911.png",
-                r: "left.png"
-            }
+        // Темы для случайных фото с Unsplash
+        const themes = [
+            { text: "Милые котики и природа", l: "cats", r: "nature" },
+            { text: "Красивое небо и цветы", l: "sky", r: "flowers" },
+            { text: "Собачки и лес", l: "dogs", r: "forest" },
+            { text: "Бабочки и горы", l: "butterfly", r: "mountains" },
+            { text: "Океан и животные", l: "ocean", r: "animals" }
         ];
 
         let idx = 0;
 
         function updateContent() {
-            idx = (idx + 1) % myContent.length;
-            const item = myContent[idx];
+            idx = (idx + 1) % themes.length;
+            const theme = themes[idx];
 
-            document.getElementById('dynamicText').innerText = item.text;
-            document.getElementById('leftPhoto').src = item.l;
-            document.getElementById('mainPhoto').src = item.m;
-            document.getElementById('rightPhoto').src = item.r;
+            document.getElementById('dynamicText').innerText = theme.text;
+            
+            // Генерируем новые случайные ссылки для боковых фото
+            // Добавляем Math.random чтобы браузер не брал старую картинку из памяти
+            document.getElementById('leftPhoto').src = `https://source.unsplash.com/featured/?${theme.l}&sig=${Math.random()}`;
+            document.getElementById('rightPhoto').src = `https://source.unsplash.com/featured/?${theme.r}&sig=${Math.random()}`;
+            
+            // Центральное фото naran.png остается неизменным
         }
     </script>
 </body>
