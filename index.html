@@ -3,81 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Моя Галерея</title>
+    <title>Моя Галерея Roblox</title>
     <style>
-        body { font-family: sans-serif; display: flex; flex-direction: column; align-items: center; background: #f0f0f0; margin: 0; padding: 20px; }
+        body { font-family: sans-serif; display: flex; flex-direction: column; align-items: center; background: #1a1a1a; color: white; margin: 0; padding: 20px; }
         
         .container { 
             display: grid; 
             grid-template-columns: 1fr 2fr 1fr; 
-            gap: 20px; 
+            gap: 15px; 
             width: 100%; 
-            max-width: 1000px; 
+            max-width: 1200px; 
             align-items: center;
         }
 
-        .side-photo, .main-photo { width: 100%; border-radius: 10px; cursor: pointer; object-fit: cover; background: #ddd; }
-        .side-photo { height: 300px; }
-        .main-photo { height: 450px; }
+        .side-photo, .main-photo { width: 100%; border-radius: 15px; border: 2px solid #333; object-fit: cover; background: #222; }
+        .side-photo { height: 250px; }
+        .main-photo { height: 450px; box-shadow: 0 0 20px rgba(0,255,255,0.2); }
 
-        .text-section { margin-top: 20px; text-align: center; background: white; padding: 20px; border-radius: 10px; width: 100%; max-width: 600px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .text-section { margin-top: 30px; text-align: center; background: #333; padding: 20px; border-radius: 15px; width: 90%; max-width: 600px; }
         
         .refresh-btn { 
-            font-size: 32px; cursor: pointer; border: none; background: none; transition: transform 0.3s; 
+            font-size: 40px; cursor: pointer; border: none; background: none; filter: grayscale(1) invert(1); transition: transform 0.4s; 
         }
-        .refresh-btn:hover { transform: scale(1.2); }
-        .refresh-btn:active { transform: rotate(180deg); }
+        .refresh-btn:hover { transform: scale(1.2) rotate(90deg); }
 
         @media (max-width: 768px) {
             .container { grid-template-columns: 1fr; }
-            .side-photo { height: 250px; }
-            .main-photo { height: 350px; }
+            .side-photo { height: 200px; }
+            .main-photo { height: 300px; }
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <img id="leftPhoto" class="side-photo" src="images/left.png" alt="Лево">
-        <img id="mainPhoto" class="main-photo" src="images/main.png" alt="Центр">
-        <img id="rightPhoto" class="side-photo" src="images/right.png" alt="Право">
+        <img id="leftPhoto" class="side-photo" src="left.png" alt="Лево">
+        <img id="mainPhoto" class="main-photo" src="main.png" alt="Центр">
+        <img id="rightPhoto" class="side-photo" src="RobloxScreenShot20250802_222639911.png" alt="Право">
     </div>
 
     <div class="text-section">
-        <p id="dynamicText">Моя подборка фото и текстов</p>
+        <p id="dynamicText" style="font-size: 1.2rem;">Мои приключения в Roblox</p>
         <button class="refresh-btn" onclick="updateContent()">🔄</button>
     </div>
 
     <script>
-        // ТУТ ТВОЙ КОНТЕНТ: просто добавляй блоки { text, left, main, right }
-        const myLibrary = [
+        // Массив с твоим контентом
+        const myContent = [
             {
-                text: "Первый набор: котики и цветы",
-                left: "images/left.png",
-                main: "images/main.png",
-                right: "images/right.png"
+                text: "Смотри, это мои основные скрины!",
+                l: "left.png",
+                m: "main.png",
+                r: "RobloxScreenShot20250802_222639911.png"
             },
             {
-                text: "Второй набор: что-то новенькое",
-                left: "images/left2.png", 
-                main: "images/main2.png",
-                right: "images/right2.png"
+                text: "А это второй скриншот из Roblox",
+                l: "RobloxScreenShot20250802_223423728.png",
+                m: "left.png",
+                r: "main.png"
             }
         ];
 
-        let currentIndex = 0;
+        let idx = 0;
 
         function updateContent() {
-            currentIndex = (currentIndex + 1) % myLibrary.length;
-            const data = myLibrary[currentIndex];
+            idx = (idx + 1) % myContent.length;
+            const item = myContent[idx];
 
-            // Обновляем текст
-            document.getElementById('dynamicText').innerText = data.text;
-            
-            // Обновляем картинки (пути к папке images)
-            document.getElementById('leftPhoto').src = data.left;
-            document.getElementById('mainPhoto').src = data.main;
-            document.getElementById('rightPhoto').src = data.right;
+            document.getElementById('dynamicText').innerText = item.text;
+            document.getElementById('leftPhoto').src = item.l;
+            document.getElementById('mainPhoto').src = item.m;
+            document.getElementById('rightPhoto').src = item.r;
         }
     </script>
 </body>
