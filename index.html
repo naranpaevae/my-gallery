@@ -5,70 +5,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Naran World</title>
     <style>
-        /* Убираем отступы и фиксируем высоту */
-        * { box-sizing: border-box; }
-        html, body { height: 100%; margin: 0; padding: 0; background: #000; overflow: hidden; }
-        
-        body { display: flex; flex-direction: column; font-family: 'Segoe UI', sans-serif; }
-
-        /* Сетка на весь экран */
-        .main-grid { 
-            display: grid; 
-            grid-template-columns: 20% 60% 20%; /* Узкие бока, широкий центр */
-            height: 85vh; 
-            width: 100%;
-            gap: 5px;
-        }
-
-        .pane { 
-            width: 100%; 
-            height: 100%; 
-            object-fit: cover; 
-            transition: opacity 0.4s ease-in-out;
-        }
-
-        /* Выделяем центральное фото */
-        .center-pane {
-            border-left: 1px solid #444;
-            border-right: 1px solid #444;
-        }
-
-        /* Нижняя панель управления */
-        .controls {
-            height: 15vh;
-            background: #111;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            color: #fff;
-        }
-
-        .btn { 
-            font-size: 45px; 
-            cursor: pointer; 
-            background: none; 
-            border: none; 
-            filter: invert(1);
-            transition: 0.3s;
-        }
-        .btn:active { transform: scale(0.9) rotate(180deg); }
-
-        /* Адаптация для мобильных */
+        html, body { height: 100%; margin: 0; padding: 0; background: #000; color: white; overflow: hidden; font-family: sans-serif; }
+        body { display: flex; flex-direction: column; }
+        .container { display: grid; grid-template-columns: 20% 60% 20%; height: 85vh; width: 100vw; gap: 5px; }
+        .photo { width: 100%; height: 100%; object-fit: cover; background: #111; }
+        .footer { height: 15vh; display: flex; flex-direction: column; justify-content: center; align-items: center; background: #111; border-top: 1px solid #333; }
+        .btn { font-size: 45px; cursor: pointer; background: none; border: none; filter: invert(1); }
         @media (max-width: 768px) {
-            .main-grid { 
-                grid-template-columns: 1fr; 
-                grid-template-rows: 1fr 0.5fr 0.5fr; /* На телефоне центр сверху, остальные под ним */
-                height: auto;
-                overflow-y: auto;
-            }
-            .center-pane { height: 400px; order: -1; }
-            .side-pane { height: 250px; }
-            .controls { height: 120px; position: sticky; bottom: 0; }
+            .container { grid-template-columns: 1fr; overflow-y: auto; height: auto; }
+            .side-photo { height: 250px; }
+            .main-photo { height: 450px; order: -1; }
+            .footer { height: 100px; position: sticky; bottom: 0; }
         }
     </style>
 </head>
 <body>
 
-    <div class="main-grid">
-        <img id="leftSide" class="pane side-pane" src="https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&w=500&q=80">
+    <div class="container">
+        <img id="leftImg" class="photo side-photo" src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=600">
+        
+        <img id="centerImg" class="photo main-photo" src="naran.png">
+        
+        <img id="rightImg" class="photo side-photo" src="https://images.unsplash.com/photo-1537151608828-ea2b11777ee8?w=600">
+    </div>
+
+    <div class="footer">
+        <div id="statusText">Галерея Naran</div>
+        <button class="btn" onclick="nextVibe()">🔄</button>
+    </div>
+
+    <script>
+        const vibes = [
+            { t: "Собачки и Лес", l: "photo-1537151608828-ea2b11777ee8", r: "photo-1441974231531-c6227db76b6e" },
+            { t: "Котики и Цветы", l: "photo-1514888286974-6c03e2ca1dba", r: "photo-1490750967868-88aa4486c946" },
+            { t: "Природа и Горы", l: "photo-1464822759023-fed622ff2c3b", r: "photo-1472214103451-9374bd1c798e" }
+        ];
+
+        let idx = 0;
+        function nextVibe() {
+            idx = (idx + 1) % vibes.length;
+            const item = vibes[idx];
+            document.getElementById('statusText').innerText = item.t;
+            document.getElementById('leftImg').src = `https://images.unsplash.com/${item.l}?w=600&fit=crop`;
+            document.getElementById('rightImg').src = `https://images.unsplash.com/${item.r}?w=600&fit=crop`;
+        }
+    </script>
+</body>
+</html>
