@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>For You</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <style>
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+    body {
+      margin: 0;
+      background-color: #f7f3f5;
+      font-family: -apple-system, sans-serif;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      padding: 20px;
+      gap: 20px;
+    }
+
+    .side {
+      flex: 1;
+      border-radius: 30px;
+      background: linear-gradient(to bottom, #fdecef, #ffffff);
+      opacity: 0.7;
+    }
+
+    .center {
+      flex: 3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .center img {
+      width: 100%;
+      max-width: 320px;
+      border-radius: 30px;
+      border: 6px solid white;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      cursor: pointer;
+      transition: transform 0.1s;
+      /* Важно для мобилок: */
+      touch-action: none; 
+      user-select: none;
+    }
+
+    .center img:active {
+      transform: scale(0.95);
+    }
+
+    .text {
+      margin-top: 20px;
+      font-size: 18px;
+      color: #6b5b60;
+      text-align: center;
+      min-height: 50px;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 12px 25px;
+      border-radius: 20px;
+      border: 1px solid #e8cdd4;
+      background: white;
+      color: #e8cdd4;
+      font-weight: bold;
+    }
+
+    @media (max-width: 600px) {
+      .side { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="side"></div>
+    <div class="center">
+      <img src="naran.jpg" alt="Photo" id="photo">
+      <div class="text" id="text">Нажми на фото...</div>
+      <button id="btn">Хочу ещё</button>
+    </div>
+    <div class="side"></div>
+  </div>
+
+  <script>
+    const photo = document.getElementById('photo');
+    const textBox = document.getElementById('text');
+    const btn = document.getElementById('btn');
+
+    const texts = ["Ты супер! ✨", "Прекрасного дня 🌸", "Улыбнись! 😊", "Все будет круто 🌟"];
+    let i = 0;
+
+    // Универсальная функция салюта
+    function launch(e) {
